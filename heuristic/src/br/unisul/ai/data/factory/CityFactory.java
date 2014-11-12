@@ -29,7 +29,7 @@ public class CityFactory {
 		cityA.addCost(new City("B"), 180);
 		cityA.addCost(new City("C"), 250);
 		cityA.addCost(new City("D"), 200);
-		cityA.addCost(new City("E"), 250);
+		cityA.addCost(new City("E"), 350);
 		cityA.addCost(new City("F"), 320);
 		cityA.addCost(new City("G"), 600);
 		cityA.addCost(new City("H"), 500);
