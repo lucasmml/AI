@@ -30,12 +30,12 @@ public class DaughterSolution {
 	}
 
 	public List<City> generateDaughterSolution(List<City> initialList) {
-		Integer somaDaSolucaoInicial = pegaValorDaViagemDaLista(initialList);
+		Integer sumOfInitialSolution = getValueOfTripFromlist(initialList);
 		List<List<City>> solucoesFilhasDaListaInicialAbsoluta = geraSolucoesFilhasDaLista(initialList);
 
 		StringBuilder sb;
 
-		List<List<City>> listaComTodasAsSolucoes = new ArrayList<List<City>>();
+		List<List<City>> solutionsList = new ArrayList<List<City>>();
 		for (List<City> cities : solucoesFilhasDaListaInicialAbsoluta) {
 			sb = new StringBuilder();
 
@@ -43,28 +43,28 @@ public class DaughterSolution {
 				sb.append(listCities.getNmCity() + ", ");
 			}
 
-			String values = sb.toString().substring(0, sb.toString().length() - 2) + " | Distance: " + pegaValorDaViagemDaLista(cities);
+			String values = sb.toString().substring(0, sb.toString().length() - 2) + " | Distance: " + getValueOfTripFromlist(cities);
 			System.out.println(values);
-			listaComTodasAsSolucoes.add(cities);
+			solutionsList.add(cities);
 		}
 
-		List<City> solucaoEscolhida = pegaViagemComMenorValor(listaComTodasAsSolucoes);
-		Integer somaSolucaoEscolhida = pegaValorDaViagemDaLista(solucaoEscolhida);
-		if (somaDaSolucaoInicial < somaSolucaoEscolhida) {
-			exibeValoresDaListaComSoma(initialList);
+		List<City> chosenSolution = getTripLowestValue(solutionsList);
+		Integer sumOfChosenSolution = getValueOfTripFromlist(chosenSolution);
+		if (sumOfInitialSolution < sumOfChosenSolution) {
+			displaySumValuesFromList(initialList);
 			return null;
 		} else {
-			return solucaoEscolhida;
+			return chosenSolution;
 		}
 	}
 
-	private void exibeValoresDaListaComSoma(List<City> list) {
+	private void displaySumValuesFromList(List<City> list) {
 		StringBuilder sb = new StringBuilder();
 		for (City c : list) {
 			sb.append(c.getNmCity() + ", ");
 		}
 
-		String values = sb.toString().substring(0, sb.toString().length() - 2) + " | Distance: " + pegaValorDaViagemDaLista(list);
+		String values = sb.toString().substring(0, sb.toString().length() - 2) + " | Distance: " + getValueOfTripFromlist(list);
 		System.err.println(values);
 	}
 
@@ -73,7 +73,7 @@ public class DaughterSolution {
 		Object[] sonsList = null;
 		City aux = null;
 
-		List<List<City>> listaDeCidadesDaViagem = new ArrayList<List<City>>();
+		List<List<City>> citiesOfTripList = new ArrayList<List<City>>();
 		List<City> daughterSolution = null;
 		for (int i = 0; i < 9; i++) {
 			for (int j = i + 1; j < 10; j++) {
@@ -90,13 +90,13 @@ public class DaughterSolution {
 					City actualSon = (City) sonsList[k];
 					daughterSolution.add(actualSon);
 				}
-				listaDeCidadesDaViagem.add(daughterSolution);
+				citiesOfTripList.add(daughterSolution);
 			}
 		}
-		return listaDeCidadesDaViagem;
+		return citiesOfTripList;
 	}
 
-	private Integer pegaValorDaViagemDaLista(List<City> listCities) {
+	private Integer getValueOfTripFromlist(List<City> listCities) {
 		Object[] sonsList = listCities.toArray();
 		Integer sum = 0;
 		for (int k = 0; k < sonsList.length; k++) {
@@ -112,13 +112,13 @@ public class DaughterSolution {
 		return sum;
 	}
 
-	private List<City> pegaViagemComMenorValor(List<List<City>> listCities) {
+	private List<City> getTripLowestValue(List<List<City>> listCities) {
 		Integer minValue = Integer.MAX_VALUE;
 		int count = 1;
 		List<City> chosenSolution = null;
 
 		for (List<City> cities : listCities) {
-			Integer actualValue = pegaValorDaViagemDaLista(cities);
+			Integer actualValue = getValueOfTripFromlist(cities);
 			if (actualValue < minValue) {
 				minValue = actualValue;
 				chosenSolution = cities;
