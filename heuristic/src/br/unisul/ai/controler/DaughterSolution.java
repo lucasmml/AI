@@ -64,49 +64,48 @@ public class DaughterSolution {
 			sb.append(c.getNmCity() + ", ");
 		}
 
-		String valores = sb.toString().substring(0, sb.toString().length() - 2) + " | Distance: " + pegaValorDaViagemDaLista(list);
-		System.err.println(valores);
+		String values = sb.toString().substring(0, sb.toString().length() - 2) + " | Distance: " + pegaValorDaViagemDaLista(list);
+		System.err.println(values);
 	}
 
 	protected List<List<City>> geraSolucoesFilhasDaLista(List<City> listCities) {
-		Object[] listaInicial = listCities.toArray();
-		Object[] listaFilhos = null;
+		Object[] initialList = listCities.toArray();
+		Object[] sonsList = null;
 		City aux = null;
 
 		List<List<City>> listaDeCidadesDaViagem = new ArrayList<List<City>>();
-		List<City> solucaoFilha = null;
+		List<City> daughterSolution = null;
 		for (int i = 0; i < 9; i++) {
 			for (int j = i + 1; j < 10; j++) {
-				listaFilhos = new Object[listaInicial.length];
+				sonsList = new Object[initialList.length];
 
-				System.arraycopy(listaInicial, 0, listaFilhos, 0,
-						listaInicial.length);
+				System.arraycopy(initialList, 0, sonsList, 0, initialList.length);
 
-				aux = (City) listaFilhos[i];
-				listaFilhos[i] = listaFilhos[j];
-				listaFilhos[j] = aux;
+				aux = (City) sonsList[i];
+				sonsList[i] = sonsList[j];
+				sonsList[j] = aux;
 
-				solucaoFilha = new ArrayList<City>();
-				for (int k = 0; k < listaFilhos.length; k++) {
-					City filhoAtual = (City) listaFilhos[k];
-					solucaoFilha.add(filhoAtual);
+				daughterSolution = new ArrayList<City>();
+				for (int k = 0; k < sonsList.length; k++) {
+					City actualSon = (City) sonsList[k];
+					daughterSolution.add(actualSon);
 				}
-				listaDeCidadesDaViagem.add(solucaoFilha);
+				listaDeCidadesDaViagem.add(daughterSolution);
 			}
 		}
 		return listaDeCidadesDaViagem;
 	}
 
 	private Integer pegaValorDaViagemDaLista(List<City> listCities) {
-		Object[] listaFilhos = listCities.toArray();
+		Object[] sonsList = listCities.toArray();
 		Integer sum = 0;
-		for (int k = 0; k < listaFilhos.length; k++) {
-			City actualSon = (City) listaFilhos[k];
+		for (int k = 0; k < sonsList.length; k++) {
+			City actualSon = (City) sonsList[k];
 
-			if (k < (listaFilhos.length - 1)) {
-				City proximoFilho = (City) listaFilhos[k + 1];
-				if (proximoFilho != null) {
-					sum = sum + actualSon.costTo(proximoFilho);
+			if (k < (sonsList.length - 1)) {
+				City nextSon = (City) sonsList[k + 1];
+				if (nextSon != null) {
+					sum = sum + actualSon.costTo(nextSon);
 				}
 			}
 		}
@@ -116,16 +115,16 @@ public class DaughterSolution {
 	private List<City> pegaViagemComMenorValor(List<List<City>> listCities) {
 		Integer minValue = Integer.MAX_VALUE;
 		int count = 1;
-		List<City> solucaoEscolhida = null;
+		List<City> chosenSolution = null;
 
 		for (List<City> cities : listCities) {
 			Integer actualValue = pegaValorDaViagemDaLista(cities);
 			if (actualValue < minValue) {
 				minValue = actualValue;
-				solucaoEscolhida = cities;
+				chosenSolution = cities;
 			}
 			count++;
 		}
-		return solucaoEscolhida;
+		return chosenSolution;
 	}
 }
