@@ -16,6 +16,7 @@ public class DaughterSolution {
 	public DaughterSolution(List<City> initialCitiesList) {
 		List<City> daughterSolutionGenerated = null;
 		boolean first = true;
+		System.out.println("S0 = A, B, C, D, E, F, G, H, I, J | Distance: 1480");
 
 		while (daughterSolutionGenerated != null || first) {
 			if(first){
